@@ -1,1 +1,14 @@
-# animal-crossing-reviews
+# Predicting Sentiment of Animal Crossing: New Horizons Reviews
+
+## Introduction
+I wanted to take on this dataset for analysis because I myself played Animal Crossing: New Horizons during the early days of the pandemic. It gave me something to do and I enjoyed it at the time, but I myself stopped playing after 9 months. Obviously, I didn’t have the same experience as others, and because of that it inspired me to research what other people thought of the game at the time and determine what the general consensus is surrounding this game, which led me to center this project around reviews for Animal Crossing: New Horizons.
+
+This project consists of two parts: the creation of a machine learning model using the [scikit-learn](https://scikit-learn.org/stable/) library that can perform an optimized sentiment rating on reviews for Animal Crossing: New Horizons and the deployment of that model to create an application that can predict the sentiment of a review for this game based on a pure review of the game.
+
+## Business Problem
+Animal Crossing: New Horizons is one of the Nintendo Switch's best entries, having sold 33.89 million copies [(as of June 30, 2021)](https://www.nintendo.co.jp/ir/en/finance/software/index.html) and is the second-best selling game in the console's history. Having released during the beginning the COVID-19 pandemic, it served as a cultural icon and played a major part in driving Switch sales. However, since the beginning it has been a growing topic of controversy and debate. Fans of the franchise would (and still do) comment about how lackluster its features were compared to past titles, while others just become burnt out and bored quickly due to the lack of content.
+
+If I were given the task to help Nintendo's dev team figure out new updates for New Horizons or help contribute ideas for the next title in the Animal Crossing series, I would want to look at reviews and feedback surrounding New Horizons to let them know what they did well and what they could improve on. To do this, first I create and test a machine learning model using modules from the scikit-learn library that can accurately predict a user's review sentiment based on the content in the review. We can then use the best model from our test models and create an application where users can input their own reviews for the game and receive a prediction for the sentiment of their review. This would allow us to use the feedback collected from the users who submitted reviews to further investigate what we did well and what we can improve on in later titles.
+
+## Data
+The data used comes from Jesse Mostipak on [Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing) and contains several datasets pertaining to Animal Crossing: New Horizons. Since we are primarily concerned with the opinions of the consumer playerbase, we will only be using the `user_reviews.csv` file, which can be accessed from the project repository's `data` folder.
