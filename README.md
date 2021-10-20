@@ -1,3 +1,5 @@
+![Animal Crossing: New Horizons official artwork](/images/AnimalCrossingNewHorizons.jpg)
+
 # Predicting Sentiment of Animal Crossing: New Horizons Reviews
 
 ## Introduction
@@ -11,4 +13,47 @@ Animal Crossing: New Horizons is one of the Nintendo Switch's best entries, havi
 If I were given the task to help Nintendo's dev team figure out new updates for New Horizons or help contribute ideas for the next title in the Animal Crossing series, I would want to look at reviews and feedback surrounding New Horizons to let them know what they did well and what they could improve on. To do this, first I create and test a machine learning model using modules from the scikit-learn library that can accurately predict a user's review sentiment based on the content in the review. We can then use the best model from our test models and create an application where users can input their own reviews for the game and receive a prediction for the sentiment of their review. This would allow us to use the feedback collected from the users who submitted reviews to further investigate what we did well and what we can improve on in later titles.
 
 ## Data
-The data used comes from Jesse Mostipak on [Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing) and contains several datasets pertaining to Animal Crossing: New Horizons. Since we are primarily concerned with the opinions of the consumer playerbase, we will only be using the `user_reviews.csv` file, which can be accessed from the project repository's `data` folder.
+The data used comes from Jesse Mostipak on [Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing) and contains several datasets pertaining to Animal Crossing: New Horizons. Since we are primarily concerned with the opinions of the consumer playerbase, we will only be using the `user_reviews.csv` file, which can be accessed from the project repository's `data` folder. This dataset contains user-submitted reviews of Animal Crossing: New Horizons from March 2020 to May 2020 from Metacritic and are each graded from a scale from 1-10, 1 being the lowest and 10 being the highest. Because the goal of our model is to predict a general sentiment "label" of review text, to train our model later I assigned labels to each entry based on a score threshold for reviews defined on [the game's reviews page on Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/user-reviews). For reference, these are:
+- 8-10 for "positive"
+- 5-7 for "neutral"
+- 0-4 for "negative"
+
+## Methods
+### Data Exploration
+- NLTK; tokenizer, regex
+- Most common words, but that doesn't tell us much; creating bigrams reveals more info like how a lot of people were complaining about the limitation of one island per console
+### Data Preparation
+- Lemmatizing text to optimize runtime of model and to better "group" together words with same roots but different suffixes
+- TF-IDF vectorizer, SMOTE, pipeline
+
+## Modeling and Evaluation
+- Logistic regression
+- Multinomial Naive Bayes
+- Decision tree
+- Random forest
+- Grid search
+
+## Next Steps
+Given more time, the next steps I would like to take with this project primarily lie within updating the application with additional features. These are some of the ideas I had in mind:
+- Implementing a database within the application that can archive reviews and their sentiment rating. This would help immensely with keeping track of overall sentiment and individual reviews.
+- Enabling users to see statistics on the front end after submitting a review, such as how many other users agreed with them among other app users and users who submitted reviews on other websites like Metacritic.
+- Expanding the application to contain a database of Switch games that includes details about each game such as trailers, reviews from other sites, etc., allowing for a wider application among more Switch games.
+- Implementing a recommender system where users can be recommended games based on whether they liked the game they submit a review for (i.e. if a user gave a negative review for New Horizons they would receive recommendations based on what was popular among other people who also gave negative reviews). The recommender system would also allow for users to be recommended games based on genre.
+- Multilingual support. At the moment, the app can only accurately predict the sentiment of English reviews, but as there were also reviews in different languages in our initial dataset (that were already labeled), I would like for my app to be able to take in reviews from a wider variety of consumers who may not speak English.
+
+## Closing
+For more information, you can review the full analysis in the [Jupyter notebook](animal-crossing-review-sentiment.ipynb) or the [presentation].
+
+For any questions or additional inquiries, please contact me at [nancyho83@yahoo.com].
+
+## Sources
+Dataset: [Animal Crossing Reviews | Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing)
+
+## Repository Structure
+<!-- ├── README.md                                            <- Top-level README for reviewers of this project -->
+<!-- ├── animal-crossing-review-sentiment.ipynb                     <- Narrative documentation of analysis in Jupyter notebook -->
+<!-- ├── presentation.pdf          <- PDF version of project presentation -->
+<!-- ├── data                                                 <- Both sourced externally and generated from code -->
+<!-- ├── images                                               <- Both sourced externally and generated from code -->
+<!-- └── backend -->
+
