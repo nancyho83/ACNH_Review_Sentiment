@@ -15,26 +15,45 @@ If I were given the task to help Nintendo's dev team figure out new updates for 
 ## Data
 The data used comes from Jesse Mostipak on [Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing) and contains several datasets pertaining to Animal Crossing: New Horizons. Since we are primarily concerned with the opinions of the consumer playerbase, we will only be using the `user_reviews.csv` file, which can be accessed from the project repository's `data` folder. 
 
-This dataset contains user-submitted reviews of Animal Crossing: New Horizons from March 2020 to May 2020 from Metacritic with scores from a scale of 1-10, 1 being the lowest and 10 being the highest. Because the goal of our model is to predict a general sentiment "label" of review text, to train our model later I assigned labels to each entry based on a score threshold for reviews defined on [the game's reviews page on Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/user-reviews). For reference, these are:
+This dataset contains user-submitted reviews of Animal Crossing: New Horizons from March 2020 to May 2020 from Metacritic with scores from a scale of 0-10, 0 being the lowest and 10 being the highest. Because the goal of our model is to predict a general sentiment "label" of review text, to train our model later I assigned labels to each entry based on a score threshold for reviews defined on [the game's reviews page on Metacritic](https://www.metacritic.com/game/switch/animal-crossing-new-horizons/user-reviews). For reference, these are:
 - 8-10 for "positive"
 - 5-7 for "neutral"
 - 0-4 for "negative"
 
 ## Methods
 ### Data Exploration
-- Reviews are heavily polarized, also significant imbalance between negative reviews and positive/neutral
-- NLTK; tokenizer, regex
-- Most common words, but that doesn't tell us much; creating bigrams reveals more info like how a lot of people were complaining about the limitation of one island per console
+An initial look at the data showed us that overall the reviews are heavily polarized; most users either gave 0's or 10's for the game, so they either loved it or hated it with hardly anything in between. This reflects in the distribution of sentiment labels as well, as there is a significant imbalance between negative reviews and positive/neutral reviews.
+
+To further analyze the review text, I use various functions from the NLTK library. First I employ a tokenizer to split each review into lists of individual words instead of whole strings. When tokenizing the text, I apply a regular expression pattern so that the tokenizer can recognize contractions as one word instead of splitting them by the root word and their apostrophes. Finally, I filter out stopwords from our reviews to remove unnecessary words that would be irrelevant in our data exploration and our modeling later, which include commonly used English words (e.g. "the", "and"), redundant words regarding the game (the word "game" and the title), and punctuation symbols. After all those steps are taken, we can create a WordCloud from the frequency distribution created using all the filtered review data:
+
+![ACNH word cloud](/images/ACNH_word_cloud.png)
+
+While we do see which words are common, these words don't tell us much insight by themselves. I decided to also create bigrams out of each review, which can help us see which words were often used in pairs with each other. 
+
+`
+[('one island', 1298),
+ ('island per', 1178),
+ ('per consol', 697),
+ ('per console', 694),
+ ('per switch', 613),
+ ('nd player', 371),
+ ('st player', 351),
+ ('first play', 326),
+ ('first player', 302),
+ ('second play', 271)]
+`
+
+These are the top 10 bigrams that were present in our data and reveals much more about what people were saying about the game in their reviews. In this case, we can see that a lot of people criticized the game for limiting users one island per console (meaning everyone who uses the same Switch console can only access the same island!).
+
 ### Data Preparation
-- Lemmatizing text to optimize runtime of model and to better "group" together words with same roots but different suffixes
-- Train-test split
+One last step I take before preparing the data for model fitting is lemmatizing the review text to optimize the runtime of each model and to better "group" together words with same roots but different suffixes. Once I assign this lemmatized text as our primary feature and the sentiment label as our target variable, I perform a train-test split on our selected data to split it into training and holdout sets for fitting and training our models.
 
 ## Modeling and Evaluation
-For all of the models I trained, these were the general steps I followed to run each model:
-- Initializing the TF-IDF vectorizer
+For each model, these were the general steps I followed to train each model:
+- Initializing the TF-IDF vectorizer to convert the text data into vectors that each classifier can take in
 - Resampling the training data using SMOTE since our classes are imbalanced (recall we had more negative reviews than positive and neutral)
 - Creating a pipeline with the TF-IDF vectorizer, SMOTE, and the selected model, which also helps prevent data leakage
-Each model is evaluated through cross-validation and recall score. We also use confusion matrices to visualize how well our models were able to correctly predict the labels of the reviews in the holdout test set.
+Each model was evaluated through cross-validation and recall score. We also use confusion matrices to visualize how well our models were able to correctly predict the labels of the reviews in the holdout test set.
 
 The first model I ran utilized a logistic regression classifier, one of the simplest machine learning classifiers available in scikit-learn. It performed very well, obtaining an average cross-validated score and recall score of ~82% each.
 
