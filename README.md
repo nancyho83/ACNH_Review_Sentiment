@@ -55,14 +55,21 @@ For each model, these were the general steps I followed to train each model:
 - Creating a pipeline with the TF-IDF vectorizer, SMOTE, and the selected model, which also helps prevent data leakage
 Each model was evaluated through cross-validation and recall score. We also use confusion matrices to visualize how well our models were able to correctly predict the labels of the reviews in the holdout test set.
 
-The first model I ran utilized a logistic regression classifier, one of the simplest machine learning classifiers available in scikit-learn. It performed very well, obtaining an average cross-validated score and recall score of ~82% each.
+The first model I ran utilized the [logistic regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) classifier, one of the simplest machine learning classifiers available in scikit-learn. It performed very well, obtaining an average cross-validated score and recall score of about 0.82 each.
+![Logistic regression confusion matrix](/images/logreg_cm.png)
 
-- Multinomial Naive Bayes
-- Decision tree
-- Random forest
+For the next model I used the [multinomial Naive Bayes](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html) classifier, an iteration of the Naive Bayes classifier based on Bayes' Theorem that is specialized for text classification. Unfortunately, it performed much worse than our first model with a 0.7 cross-validation score and even worse recall score of 0.68.
+![Multinomial Naive Bayes confusion matrix](/images/mnb_cm.png)
+
+Next I create a model using the [decision tree](https://scikit-learn.org/stable/modules/tree.html) classifier, another simple classifier that revolves around the idea of predicting the value of a target variable using decision rules inferred from the data features, which I believe would be well-suited for the scope of this project. However, this model performed even worse than the first two, with a 0.65 cross-validation score, 0.62 recall score, and the tendency to misclassify reviews as positive and negative much more frequently.
+![Decision tree confusion matrix](/images/dt_cm.png)
+
+Building on the decision tree model, we can also try a [random forest](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) classifier, which is an ensemble method derived from decision trees that takes subsets of the training set instead of the whole dataset to create individual trees and averages all the trees to produce the most optimal predictive ability. It turned out to do significantly better than the decision tree model, but it still falls behind the logistic regression model with cross-validated and recall scores of 0.80 and 0.82, respectively.
+![Random forest confusion matrix](/images/rf_cm.png)
 
 ### Optimization
-- Grid search
+After obtaining our best-performing model, we can run a grid search on it using scikit-learn's [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) to define test parameters and attempt to optimize our model. Overall, optimizing the logistic regression model helped it to perform slightly better; it has a higher recall score and as we can see from our confusion matrix, it was able to predict more true negatives than our initial model.
+![Optimized logistic regression confusion matrix](/images/optimized_logreg_cm.png)
 
 ## Application
 Our best model can be implemented into an application using Flask. If we wanted to intake newer reviews, we would have an application that would be able to rate the sentiment of a review for us without needing it to also be graded on a scale.
@@ -84,10 +91,12 @@ For any questions or additional inquiries, please contact me at [nancyho83@yahoo
 Dataset: [Animal Crossing Reviews | Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing)
 
 ## Repository Structure
+```
 ├── README.md                                            <- Top-level README for reviewers of this project 
 ├── animal-crossing-review-sentiment.ipynb               <- Narrative documentation of analysis in Jupyter notebook 
 ├── presentation.pdf                                     <- PDF version of project presentation (to be added later)
 ├── data                                                 <- Both sourced externally and generated from code 
 ├── images                                               <- Both sourced externally and generated from code
 └── backend                                              <- Both sourced externally and generated from code
+```
 
