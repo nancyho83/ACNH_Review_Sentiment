@@ -31,15 +31,15 @@ To further analyze the review text, I use various functions from the NLTK librar
 While we do see which words are common, these words don't tell us much insight by themselves. I decided to also create bigrams out of each review, which can help us see which words were often used in pairs with each other. 
 
 `
-[('one island', 1298),
- ('island per', 1178),
- ('per consol', 697),
- ('per console', 694),
- ('per switch', 613),
- ('nd player', 371),
- ('st player', 351),
- ('first play', 326),
- ('first player', 302),
+[('one island', 1298),  
+ ('island per', 1178),  
+ ('per consol', 697),  
+ ('per console', 694),  
+ ('per switch', 613),  
+ ('nd player', 371),  
+ ('st player', 351),  
+ ('first play', 326),  
+ ('first player', 302),  
  ('second play', 271)]
 `
 
@@ -87,19 +87,29 @@ Some future improvements that could be made to the application include:
 - Implementing a recommender system where users can be recommended games based on whether they liked the game they submit a review for (i.e. if a user gave a negative review for New Horizons they would receive recommendations based on what was popular among other people who also gave negative reviews). The recommender system would also allow for users to be recommended games based on genre.
 - Multilingual support. At the moment, the app can only accurately predict the sentiment of English reviews, but as there were also reviews in different languages in our initial dataset (that were already labeled), I would like for my app to be able to take in reviews from a wider variety of consumers who may not speak English.
 
-## Closing
-For more information, you can review the full analysis in the [Jupyter notebook](animal-crossing-review-sentiment.ipynb) or the [presentation].
+Additionally, we can aim to apply our application to social media posts, particularly those on Twitter and YouTube, and store feedback from there. In my experience, I have noticed a lot of buzz on social media about New Horizons, especially on those platforms whenever news or posts are released on there, so I believe it would be helpful to gather feedback from social media as well.
 
-For any questions or additional inquiries, please contact me at [nancyho83@yahoo.com].
+## Closing
+For more information, you can review the full analysis in the [Jupyter notebook](acnh_review_sentiment.ipynb) or the [presentation](acnh_review_sentiment_presentation.pdf).
+
+For any questions or additional inquiries, please contact me at [nancyho83@yahoo.com](mailto:nancyho83@yahoo.com).
 
 ## Sources
 Dataset: [Animal Crossing Reviews | Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing)
+
+Libraries used: [scikit-learn](https://scikit-learn.org/stable/index.html), [imbalanced-learn](https://imbalanced-learn.org/stable/index.html), [NLTK](https://www.nltk.org/)
+
+Repository used to deploy application on Heroku using Flask: [nancyho83/flask-model-deployment](https://github.com/nancyho83/flask-model-deployment)
+
+Other research sources:  
+- [Data on top selling Switch games (last updated on June 30, 2021 at the time of this project)](https://www.nintendo.co.jp/ir/en/finance/software/index.html)  
+
 
 ## Repository Structure
 ```
 ├── README.md                                            <- Top-level README for reviewers of this project 
 ├── acnh_review_sentiment.ipynb                          <- Narrative documentation of analysis in Jupyter notebook 
-├── acnh_review_sentiment.pdf                            <- PDF version of project presentation (to be added later)
+├── acnh_review_sentiment_presentation.pdf               <- PDF version of project presentation (to be added later)
 ├── data                                                 <- Both sourced externally and generated from code 
 ├── images                                               <- Both sourced externally and generated from code
 └── backend                                              <- Contains backend code for this project's deployed application
