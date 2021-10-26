@@ -10,7 +10,7 @@ This project consists of two parts: the creation of a machine learning model usi
 ## Business Problem
 Animal Crossing: New Horizons is one of the Nintendo Switch's best entries, having sold 33.89 million copies [(as of June 30, 2021)](https://www.nintendo.co.jp/ir/en/finance/software/index.html) and is the second-best selling game in the console's history. Having released during the beginning the COVID-19 pandemic, it served as a cultural icon and played a major part in driving Switch sales. However, since the beginning it has been a growing topic of controversy and debate. Fans of the franchise would (and still do) comment about how lackluster its features were compared to past titles, while others just become burnt out and bored quickly due to the lack of content.
 
-If I were given the task to help Nintendo's dev team figure out new updates for New Horizons or help contribute ideas for the next title in the Animal Crossing series, I would want to look at reviews and feedback surrounding New Horizons to let them know what they did well and what they could improve on. To do this, first I create and test a machine learning model using modules from the scikit-learn library that can accurately predict a user's review sentiment based on the content in the review. We can then use the best model from our test models and create an application where users can input their own reviews for the game and receive a prediction for the sentiment of their review. This would allow us to use the feedback collected from the users who submitted reviews to further investigate what we did well and what we can improve on in later titles.
+I would like to look at reviews and feedback of this game to make recommendations to Nintendo on how they can improve and grow following the cultural and consumer response to Animal Crossing: New Horizons. To do this, I create a machine learning model using scikit-learn that can accurately predict a user's review sentiment based on the content in the review, then use that model to create an application where users can input their feedback for the game and receive a prediction for their review's sentiment. This would allow us to use the feedback collected from the users who submitted reviews to further investigate what we did well and what we can improve on in later titles. The feedback we receive here can also help in other areas outside of the developmeny side, such as with marketing strategies to promote this game and other future Switch titles.
 
 ## Data
 The data used comes from Jesse Mostipak on [Kaggle](https://www.kaggle.com/jessemostipak/animal-crossing) and contains several datasets pertaining to Animal Crossing: New Horizons. Since we are primarily concerned with the opinions of the consumer playerbase, we will only be using the `user_reviews.csv` file, which can be accessed from the project repository's `data` folder. 
@@ -43,7 +43,7 @@ While we do see which words are common, these words don't tell us much insight b
  ('second play', 271)]
 `
 
-These are the top 10 bigrams that were present in our data and reveals much more about what people were saying about the game in their reviews. In this case, we can see that a lot of people criticized the game for limiting users one island per console (meaning everyone who uses the same Switch console can only access the same island!).
+This is a list of the top 10 bigrams that were present in our data and reveals much more about what people were saying about the game in their reviews. In this case, we can see that a lot of people criticized the game for limiting users one island per console (meaning everyone who uses the same Switch console can only access the same island!).
 
 ### Data Preparation
 One last step I take before preparing the data for model fitting is lemmatizing the review text to optimize the runtime of each model and to better "group" together words with same roots but different suffixes. Once I assign this lemmatized text as our primary feature and the sentiment label as our target variable, I perform a train-test split on our selected data to split it into training and holdout sets for fitting and training our models.
@@ -77,7 +77,7 @@ After obtaining our best-performing model, we can run a grid search on it using 
 ![Optimized logistic regression confusion matrix](/images/optimized_logreg_cm.png)
 
 ## Application
-Our best model can be implemented into an application using Flask. If we wanted to intake newer reviews, we would have an application that would be able to rate the sentiment of a review for us without needing it to also be graded on a scale.
+Our best model can be implemented into an application using Flask. If we wanted to intake newer reviews, we would have an application that would be able to rate the sentiment of a review for us without needing it to also be graded on a scale. The model implemented in the final application and the Jupyter notebook used to create said model can be found in the `backend` folder of this repository, while the app itself can be found at this link: [Animal Crossing: New Horizons Sentiment Rater](https://acnh-sentiment-rater.herokuapp.com/).
 
 ## Next Steps
 Some future improvements that could be made to the application include:
@@ -98,10 +98,10 @@ Dataset: [Animal Crossing Reviews | Kaggle](https://www.kaggle.com/jessemostipak
 ## Repository Structure
 ```
 ├── README.md                                            <- Top-level README for reviewers of this project 
-├── animal-crossing-review-sentiment.ipynb               <- Narrative documentation of analysis in Jupyter notebook 
-├── presentation.pdf                                     <- PDF version of project presentation (to be added later)
+├── acnh_review_sentiment.ipynb                          <- Narrative documentation of analysis in Jupyter notebook 
+├── acnh_review_sentiment.pdf                            <- PDF version of project presentation (to be added later)
 ├── data                                                 <- Both sourced externally and generated from code 
 ├── images                                               <- Both sourced externally and generated from code
-└── backend                                              <- Both sourced externally and generated from code
+└── backend                                              <- Contains backend code for this project's deployed application
 ```
 
